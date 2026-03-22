@@ -1,0 +1,15 @@
+CIRCUITPY_WIFI_SSID = "your_wifi_ssid"
+CIRCUITPY_WIFI_PASSWORD = "your_wifi_password"
+ADAFRUIT_AIO_USERNAME = "your_aio_username"
+ADAFRUIT_AIO_KEY = "your_aio_key"
+
+# Get these from Google Maps or similar service
+LATITUDE_CENTER = "45.583"
+LONGITUDE_CENTER = "-122.544"
+
+# These set the bounding box for finding aircraft and can be adjusted to cast a wider or looser search
+LATITUDE_RANGE = "0.1"
+LONGITUDE_RANGE = "0.1"
+
+# Timezone names from https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+TIMEZONE="America/Los_Angeles"
