@@ -24,7 +24,7 @@ DISPLAY_HEIGHT = 32
 
 # 432 Minutes - 7.2 Hours
 NETWORK_CALL_INTERVAL = 30
-RECONNECT_RETRY_DELAY = 0.5
+RECONNECT_RETRY_DELAY = 5
 TIME_SYNC_INTERVAL = 3600
 
 # --- Icon Properties ---
@@ -161,15 +161,9 @@ def update_time(*, hours=None, minutes=None, show_colon=True):
         clock_label.text = _format_clock_text(json_response)
         clock_label.color = convert_color(CLOCK_COLOR)
     except (OSError, ValueError, KeyError) as err:
-        print(err)
-        
-        print(f"Connected: {esp.connected}")
-        print(f"Status: {esp.status}")
+        print("Error updating current time")
 
         reconnect_esp()
-        
-        print(f"Connected: {esp.connected}")
-        print(f"Status: {esp.status}")
         
 def scroll_text_labels(text_labels):
     """Move scrolling labels left and reset once they exit the viewport."""
@@ -496,6 +490,7 @@ def reconnect_esp():
             esp.connect_AP(ssid, password)
         except OSError:
             # Small backoff avoids a hot retry loop when AP is unavailable.
+            print("Unable to connect to WiFi, retrying in 5 seconds")
             time.sleep(RECONNECT_RETRY_DELAY)
             continue
 
@@ -542,6 +537,8 @@ else:
     display_no_flights(static_icon_group, main_group)
 
 last_network_call_time = time.monotonic()
+
+print("Startup successful!")
 
 while True:
     loop_now = time.monotonic()
